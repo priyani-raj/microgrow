@@ -42,24 +42,24 @@ const Onboarding = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-50 px-4 py-10">
+    <div className="flex min-h-screen items-center justify-center bg-slate-50 dark:bg-slate-950 px-4 py-10">
       <div className="w-full max-w-lg">
         <div className="mb-8 text-center">
-          <h1 className="text-2xl font-semibold text-slate-900">Let's personalize MicroGrow</h1>
-          <p className="mt-1 text-sm text-slate-500">
+          <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">Let's personalize MicroGrow</h1>
+          <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
             We'll pick the right activities for your stolen time
           </p>
         </div>
 
         {error && (
-          <div className="mb-4 rounded-lg bg-red-50 px-4 py-2 text-sm text-red-600">{error}</div>
+          <div className="mb-4 rounded-lg bg-red-50 dark:bg-red-950 px-4 py-2 text-sm text-red-600 dark:text-red-400">{error}</div>
         )}
 
-        <div className="mb-6 rounded-xl border border-slate-200 bg-white p-5">
-          <h2 className="mb-1 text-sm font-medium text-slate-900">
-            Which topics do you want to focus on? <span className="text-red-500">*</span>
+        <div className="mb-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5">
+          <h2 className="mb-1 text-sm font-medium text-slate-900 dark:text-slate-100">
+            Which topics do you want to focus on? <span className="text-red-500 dark:text-red-400">*</span>
           </h2>
-          <p className="mb-3 text-xs text-slate-500">Pick the ones you feel weakest in</p>
+          <p className="mb-3 text-xs text-slate-500 dark:text-slate-400">Pick the ones you feel weakest in</p>
           <div className="flex flex-wrap gap-2">
             {CORE_TOPICS.map((topic) => (
               <button
@@ -69,7 +69,7 @@ const Onboarding = () => {
                 className={`rounded-full px-3 py-1.5 text-sm font-medium transition ${
                   weakTopics.includes(topic)
                     ? 'bg-indigo-600 text-white'
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                    : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-600'
                 }`}
               >
                 {topic}
@@ -78,9 +78,9 @@ const Onboarding = () => {
           </div>
         </div>
 
-        <div className="mb-6 rounded-xl border border-slate-200 bg-white p-5">
-          <h2 className="mb-1 text-sm font-medium text-slate-900">Target companies</h2>
-          <p className="mb-3 text-xs text-slate-500">Optional — helps tailor your roadmap</p>
+        <div className="mb-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5">
+          <h2 className="mb-1 text-sm font-medium text-slate-900 dark:text-slate-100">Target companies</h2>
+          <p className="mb-3 text-xs text-slate-500 dark:text-slate-400">Optional — helps tailor your roadmap</p>
           <div className="flex flex-wrap gap-2">
             {TARGET_COMPANIES.map((company) => (
               <button
@@ -90,7 +90,7 @@ const Onboarding = () => {
                 className={`rounded-full px-3 py-1.5 text-sm font-medium transition ${
                   targetCompanies.includes(company)
                     ? 'bg-indigo-600 text-white'
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                    : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-600'
                 }`}
               >
                 {company}

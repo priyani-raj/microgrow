@@ -5,23 +5,23 @@ const SessionComplete = ({ streak, minutes }) => {
 
   return (
     <div className="flex flex-col items-center text-center">
-      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-50 text-3xl">
+      <div className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-50 dark:bg-emerald-950 text-3xl">
         🎉
       </div>
-      <h2 className="mt-4 text-lg font-semibold text-slate-900">Nice work!</h2>
-      <p className="mt-1 text-sm text-slate-500">
+      <h2 className="mt-4 text-lg font-semibold text-slate-900 dark:text-slate-100">Nice work!</h2>
+      <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
         You just turned {minutes} stolen minutes into real progress.
       </p>
 
-      <div className="mt-4 rounded-xl border border-slate-200 bg-white px-6 py-4">
-        <p className="text-2xl font-semibold text-orange-500">{streak?.current ?? '–'} 🔥</p>
-        <p className="text-xs text-slate-500">day streak</p>
+      <div className="mt-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 py-4">
+        <p className="text-2xl font-semibold text-orange-500 dark:text-orange-400">{streak?.current ?? '–'} 🔥</p>
+        <p className="text-xs text-slate-500 dark:text-slate-400">day streak</p>
       </div>
 
       <div className="mt-6 flex w-full gap-2">
         <button
           onClick={() => window.location.reload()}
-          className="flex-1 rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-50"
+          className="flex-1 rounded-lg border border-slate-200 dark:border-slate-800 px-4 py-2 text-sm font-medium text-slate-600 dark:text-slate-400 transition hover:bg-slate-50 dark:hover:bg-slate-800"
         >
           Another session
         </button>

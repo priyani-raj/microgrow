@@ -17,13 +17,13 @@ const SessionTimer = ({ totalMinutes }) => {
 
   return (
     <div className="flex items-center gap-3">
-      <div className="h-1.5 flex-1 rounded-full bg-slate-100">
+      <div className="h-1.5 flex-1 rounded-full bg-slate-100 dark:bg-slate-800">
         <div
           className="h-1.5 rounded-full bg-indigo-500 transition-all"
           style={{ width: `${percent}%` }}
         />
       </div>
-      <span className="whitespace-nowrap text-xs font-medium text-slate-500">
+      <span className="whitespace-nowrap text-xs font-medium text-slate-500 dark:text-slate-400">
         {mins}:{secs.toString().padStart(2, '0')} left
       </span>
     </div>

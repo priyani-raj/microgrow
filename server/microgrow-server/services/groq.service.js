@@ -8,8 +8,18 @@ const MODEL = 'llama-3.1-8b-instant'; // fast + free tier friendly
 // 1. Concept Explainer
 // Given a topic, return a clear explanation in under 60 seconds of reading
 // ---------------------------------------------
-const explainConcept = async (topic) => {
-  const prompt = `Explain the CS concept "${topic}" to a student preparing for technical interviews.
+const explainConcept = async (topic, simpler = false) => {
+  const prompt = simpler
+    ? `The student found your previous explanation of "${topic}" confusing. Try again with a COMPLETELY DIFFERENT, simpler analogy - assume they have very little background knowledge.
+
+Rules:
+- Keep it short enough to read in under 60 seconds (roughly 100-130 words)
+- Use ONE very simple, everyday analogy (different from a typical one - think kitchen, sports, traffic, etc.)
+- Avoid technical terms entirely where possible
+- Build up from the most basic idea first
+
+Format as plain text, no markdown headers.`
+    : `Explain the CS concept "${topic}" to a student preparing for technical interviews.
 
 Rules:
 - Keep it short enough to read in under 60 seconds (roughly 120-150 words)
@@ -91,4 +101,39 @@ Respond in this EXACT JSON format with no extra text:
   return result.flashcards;
 };
 
-module.exports = { explainConcept, evaluateApproach, generateFlashcards };
+// ---------------------------------------------
+// 4. DSA Problem Generator
+// Generates an original DSA problem with a title, prompt, and expected approach
+// ---------------------------------------------
+const generateDSAProblem = async (topic, difficulty) => {
+  const prompt = `Create an original technical interview DSA practice problem.
+
+Topic: ${topic}
+Difficulty: ${difficulty}
+
+Requirements:
+- The problem must be ORIGINAL (do not copy well-known problems verbatim, write your own version/wording)
+- It should be solvable conceptually in ${difficulty === 'easy' ? '8-10' : difficulty === 'medium' ? '10-15' : '15-20'} minutes by describing an approach (not writing full code)
+- Provide a clear, correct "expected approach" explanation including the optimal algorithm and its time/space complexity
+
+Respond in this EXACT JSON format with no extra text:
+{
+  "title": "<short descriptive title, 3-6 words>",
+  "prompt": "<2-4 sentence problem description>",
+  "expectedApproach": "<3-5 sentences explaining the optimal approach and its time/space complexity>",
+  "tags": ["<tag1>", "<tag2>"],
+  "estimatedMins": <integer>
+}`;
+
+  const completion = await groq.chat.completions.create({
+    model: MODEL,
+    messages: [{ role: 'user', content: prompt }],
+    temperature: 0.8,
+    max_tokens: 500,
+    response_format: { type: 'json_object' },
+  });
+
+  return JSON.parse(completion.choices[0].message.content);
+};
+
+module.exports = { explainConcept, evaluateApproach, generateFlashcards, generateDSAProblem };

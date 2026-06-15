@@ -41,12 +41,12 @@ const AIExplainer = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
       <Navbar />
 
       <div className="mx-auto max-w-2xl px-4 py-8">
-        <h1 className="text-2xl font-semibold text-slate-900">AI Explainer</h1>
-        <p className="mt-1 text-sm text-slate-500">
+        <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">AI Explainer</h1>
+        <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
           Search any CS concept, get a clear explanation in under 60 seconds.
         </p>
 
@@ -56,7 +56,7 @@ const AIExplainer = () => {
             value={topic}
             onChange={(e) => setTopic(e.target.value)}
             placeholder="e.g. Binary Search, Process vs Thread, Indexing..."
-            className="flex-1 rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
+            className="flex-1 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-2 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
           />
           <button
             type="submit"
@@ -73,7 +73,7 @@ const AIExplainer = () => {
             <button
               key={t}
               onClick={() => handleSearch(t)}
-              className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600 transition hover:bg-slate-200"
+              className="rounded-full bg-slate-100 dark:bg-slate-800 px-3 py-1 text-xs font-medium text-slate-600 dark:text-slate-400 transition hover:bg-slate-200 dark:hover:bg-slate-600"
             >
               {t}
             </button>
@@ -81,28 +81,28 @@ const AIExplainer = () => {
         </div>
 
         {error && (
-          <div className="mt-4 rounded-lg bg-red-50 px-4 py-2 text-sm text-red-600">{error}</div>
+          <div className="mt-4 rounded-lg bg-red-50 dark:bg-red-950 px-4 py-2 text-sm text-red-600 dark:text-red-400">{error}</div>
         )}
 
         {loading && (
-          <div className="mt-6 rounded-xl border border-slate-200 bg-white p-5">
-            <p className="text-sm text-slate-400">Generating a clear explanation...</p>
+          <div className="mt-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5">
+            <p className="text-sm text-slate-400 dark:text-slate-500">Generating a clear explanation...</p>
           </div>
         )}
 
         {explanation && !loading && (
-          <div className="mt-6 rounded-xl border border-slate-200 bg-white p-5">
-            <span className="mb-2 inline-block rounded-full bg-indigo-50 px-2 py-0.5 text-xs font-medium text-indigo-600">
+          <div className="mt-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5">
+            <span className="mb-2 inline-block rounded-full bg-indigo-50 dark:bg-indigo-950 px-2 py-0.5 text-xs font-medium text-indigo-600 dark:text-indigo-400">
               {topic}
             </span>
-            <p className="text-sm leading-relaxed text-slate-700">{explanation}</p>
+            <p className="text-sm leading-relaxed text-slate-700 dark:text-slate-300">{explanation}</p>
           </div>
         )}
 
         {/* Recent searches */}
         {history.length > 0 && (
           <div className="mt-8">
-            <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+            <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500">
               Recent searches
             </h3>
             <div className="mt-2 flex flex-wrap gap-2">
@@ -110,7 +110,7 @@ const AIExplainer = () => {
                 <button
                   key={h}
                   onClick={() => handleSearch(h)}
-                  className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-600 transition hover:bg-slate-50"
+                  className="rounded-full border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-1 text-xs font-medium text-slate-600 dark:text-slate-400 transition hover:bg-slate-50 dark:hover:bg-slate-800"
                 >
                   {h}
                 </button>

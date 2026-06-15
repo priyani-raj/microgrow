@@ -7,13 +7,13 @@ const Flashcard = require('../models/Flashcard');
 // Body: { topic }
 const explain = async (req, res, next) => {
   try {
-    const { topic } = req.body;
+    const { topic, simpler } = req.body;
 
     if (!topic) {
       return res.status(400).json({ message: 'topic is required' });
     }
 
-    const explanation = await explainConcept(topic);
+    const explanation = await explainConcept(topic, !!simpler);
 
     res.json({ topic, explanation });
   } catch (error) {

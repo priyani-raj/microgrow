@@ -1,7 +1,7 @@
 import api from './api';
 
-export const explainConcept = async (topic) => {
-  const { data } = await api.post('/ai/explain', { topic });
+export const explainConcept = async (topic, simpler = false) => {
+  const { data } = await api.post('/ai/explain', { topic, simpler });
   return data;
 };
 

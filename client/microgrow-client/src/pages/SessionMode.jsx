@@ -56,17 +56,17 @@ const SessionMode = () => {
       case 'concept':
         return <ConceptActivity topic={topic} onComplete={handleActivityComplete} />;
       default:
-        return <p className="text-center text-sm text-slate-400">Unknown activity type.</p>;
+        return <p className="text-center text-sm text-slate-400 dark:text-slate-500">Unknown activity type.</p>;
     }
   };
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
       <Navbar />
 
       <div className="mx-auto max-w-lg px-4 py-8">
         {error && (
-          <div className="mb-4 rounded-lg bg-red-50 px-4 py-2 text-center text-sm text-red-600">
+          <div className="mb-4 rounded-lg bg-red-50 dark:bg-red-950 px-4 py-2 text-center text-sm text-red-600 dark:text-red-400">
             {error}
           </div>
         )}
@@ -74,7 +74,7 @@ const SessionMode = () => {
         {step === 'pick' && <TimePicker onSelect={handleTimeSelect} />}
 
         {step === 'loading' && (
-          <p className="text-center text-sm text-slate-400">Picking the right activity for you...</p>
+          <p className="text-center text-sm text-slate-400 dark:text-slate-500">Picking the right activity for you...</p>
         )}
 
         {step === 'activity' && sessionInfo && (

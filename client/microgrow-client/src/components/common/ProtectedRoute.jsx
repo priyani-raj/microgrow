@@ -7,7 +7,7 @@ const ProtectedRoute = ({ children }) => {
   if (loading) {
     return (
       <div className="flex h-screen items-center justify-center">
-        <p className="text-slate-400">Loading...</p>
+        <p className="text-slate-400 dark:text-slate-500">Loading...</p>
       </div>
     );
   }

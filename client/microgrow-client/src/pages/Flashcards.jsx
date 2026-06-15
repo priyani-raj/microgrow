@@ -5,9 +5,9 @@ import * as aiService from '../services/aiService';
 import { CORE_TOPICS } from '../constants/options';
 
 const ratingButtons = [
-  { key: 'again', label: 'Again', color: 'bg-red-50 text-red-600 hover:bg-red-100' },
-  { key: 'hard', label: 'Hard', color: 'bg-orange-50 text-orange-600 hover:bg-orange-100' },
-  { key: 'easy', label: 'Easy', color: 'bg-emerald-50 text-emerald-600 hover:bg-emerald-100' },
+  { key: 'again', label: 'Again', color: 'bg-red-50 dark:bg-red-950 text-red-600 dark:text-red-400 hover:bg-red-100' },
+  { key: 'hard', label: 'Hard', color: 'bg-orange-50 dark:bg-orange-950 text-orange-600 dark:text-orange-400 hover:bg-orange-100' },
+  { key: 'easy', label: 'Easy', color: 'bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-100' },
 ];
 
 const Flashcards = () => {
@@ -75,16 +75,16 @@ const Flashcards = () => {
   const card = cards[index];
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
       <Navbar />
 
       <div className="mx-auto max-w-lg px-4 py-8">
-        <h1 className="text-2xl font-semibold text-slate-900">Flashcards</h1>
-        <p className="mt-1 text-sm text-slate-500">Review what's due, or generate new cards.</p>
+        <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">Flashcards</h1>
+        <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">Review what's due, or generate new cards.</p>
 
         {/* Generate new cards by topic */}
         <div className="mt-4">
-          <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500">
             Generate new cards
           </p>
           <div className="flex flex-wrap gap-2">
@@ -96,7 +96,7 @@ const Flashcards = () => {
                 className={`rounded-full px-3 py-1 text-xs font-medium transition disabled:opacity-50 ${
                   selectedTopic === t
                     ? 'bg-indigo-600 text-white'
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                    : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-600'
                 }`}
               >
                 {t}
@@ -106,38 +106,38 @@ const Flashcards = () => {
         </div>
 
         {error && (
-          <div className="mt-4 rounded-lg bg-red-50 px-4 py-2 text-sm text-red-600">{error}</div>
+          <div className="mt-4 rounded-lg bg-red-50 dark:bg-red-950 px-4 py-2 text-sm text-red-600 dark:text-red-400">{error}</div>
         )}
 
         {/* Card area */}
         <div className="mt-6">
           {loading || generating ? (
-            <p className="text-center text-sm text-slate-400">
+            <p className="text-center text-sm text-slate-400 dark:text-slate-500">
               {generating ? 'Generating flashcards...' : 'Loading due cards...'}
             </p>
           ) : cards.length === 0 ? (
-            <div className="rounded-xl border border-slate-200 bg-white p-8 text-center">
-              <p className="text-sm text-slate-500">
+            <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-8 text-center">
+              <p className="text-sm text-slate-500 dark:text-slate-400">
                 🎉 No cards due right now! Generate new ones above, or come back later.
               </p>
             </div>
           ) : (
             <>
-              <p className="mb-2 text-center text-xs text-slate-400">
+              <p className="mb-2 text-center text-xs text-slate-400 dark:text-slate-500">
                 Card {index + 1} of {cards.length}
               </p>
 
               <div
                 onClick={() => setFlipped(!flipped)}
-                className="flex min-h-[180px] cursor-pointer flex-col items-center justify-center rounded-2xl border border-slate-200 bg-white p-6 text-center transition hover:border-indigo-200"
+                className="flex min-h-[180px] cursor-pointer flex-col items-center justify-center rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 text-center transition hover:border-indigo-200"
               >
-                <span className="mb-2 rounded-full bg-indigo-50 px-2 py-0.5 text-xs font-medium text-indigo-600">
+                <span className="mb-2 rounded-full bg-indigo-50 dark:bg-indigo-950 px-2 py-0.5 text-xs font-medium text-indigo-600 dark:text-indigo-400">
                   {card.topic}
                 </span>
-                <p className="text-base font-medium text-slate-900">
+                <p className="text-base font-medium text-slate-900 dark:text-slate-100">
                   {flipped ? card.answer : card.question}
                 </p>
-                {!flipped && <p className="mt-3 text-xs text-slate-400">Tap to reveal answer</p>}
+                {!flipped && <p className="mt-3 text-xs text-slate-400 dark:text-slate-500">Tap to reveal answer</p>}
               </div>
 
               {flipped && (

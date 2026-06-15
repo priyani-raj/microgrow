@@ -2,9 +2,9 @@ import { Link } from 'react-router-dom';
 
 const Landing = () => {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-slate-50 px-4 text-center">
-      <h1 className="text-3xl font-bold text-slate-900">MicroGrow</h1>
-      <p className="mt-3 max-w-md text-slate-500">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-slate-50 dark:bg-slate-950 px-4 text-center">
+      <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-100">MicroGrow</h1>
+      <p className="mt-3 max-w-md text-slate-500 dark:text-slate-400">
         Turn your stolen lecture time into real CS skill — one 5-minute session at a time.
       </p>
       <div className="mt-6 flex gap-3">
@@ -16,7 +16,7 @@ const Landing = () => {
         </Link>
         <Link
           to="/login"
-          className="rounded-lg border border-slate-200 px-5 py-2.5 text-sm font-medium text-slate-600 transition hover:bg-slate-50"
+          className="rounded-lg border border-slate-200 dark:border-slate-800 px-5 py-2.5 text-sm font-medium text-slate-600 dark:text-slate-400 transition hover:bg-slate-50 dark:hover:bg-slate-800"
         >
           Log in
         </Link>
