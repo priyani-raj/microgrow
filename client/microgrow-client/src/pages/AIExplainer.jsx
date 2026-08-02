@@ -5,7 +5,7 @@ import { CORE_TOPICS } from '../constants/options';
 
 const AIExplainer = () => {
   const [topic, setTopic] = useState('');
-  const [explanation, setExplanation] = useState('');
+  const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [history, setHistory] = useState([]);
@@ -13,17 +13,13 @@ const AIExplainer = () => {
   const handleSearch = async (searchTopic) => {
     const query = (searchTopic ?? topic).trim();
     if (!query) return;
-
     setLoading(true);
     setError('');
-    setExplanation('');
-
+    setResult(null);
     try {
       const data = await aiService.explainConcept(query);
-      setExplanation(data.explanation);
+      setResult({ topic: query, ...data.explanation });
       setTopic(query);
-
-      // Add to history (avoid duplicates, keep last 5)
       setHistory((prev) => {
         const filtered = prev.filter((h) => h.toLowerCase() !== query.toLowerCase());
         return [query, ...filtered].slice(0, 5);
@@ -43,11 +39,10 @@ const AIExplainer = () => {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
       <Navbar />
-
       <div className="mx-auto max-w-2xl px-4 py-8">
         <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">AI Explainer</h1>
         <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-          Search any CS concept, get a clear explanation in under 60 seconds.
+          Get a full breakdown — explanation, optimized approach, complexity, and interview tip.
         </p>
 
         <form onSubmit={handleSubmit} className="mt-6 flex gap-2">
@@ -55,7 +50,7 @@ const AIExplainer = () => {
             type="text"
             value={topic}
             onChange={(e) => setTopic(e.target.value)}
-            placeholder="e.g. Binary Search, Process vs Thread, Indexing..."
+            placeholder="e.g. Binary Search, Deadlock, Indexing..."
             className="flex-1 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-2 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500"
           />
           <button
@@ -67,13 +62,12 @@ const AIExplainer = () => {
           </button>
         </form>
 
-        {/* Quick topic suggestions */}
         <div className="mt-3 flex flex-wrap gap-2">
           {CORE_TOPICS.map((t) => (
             <button
               key={t}
               onClick={() => handleSearch(t)}
-              className="rounded-full bg-slate-100 dark:bg-slate-800 px-3 py-1 text-xs font-medium text-slate-600 dark:text-slate-400 transition hover:bg-slate-200 dark:hover:bg-slate-600"
+              className="rounded-full bg-slate-100 dark:bg-slate-800 px-3 py-1 text-xs font-medium text-slate-600 dark:text-slate-400 transition hover:bg-slate-200 dark:hover:bg-slate-700"
             >
               {t}
             </button>
@@ -81,25 +75,57 @@ const AIExplainer = () => {
         </div>
 
         {error && (
-          <div className="mt-4 rounded-lg bg-red-50 dark:bg-red-950 px-4 py-2 text-sm text-red-600 dark:text-red-400">{error}</div>
+          <div className="mt-4 rounded-lg bg-red-50 dark:bg-red-950 px-4 py-2 text-sm text-red-600 dark:text-red-400">
+            {error}
+          </div>
         )}
 
         {loading && (
           <div className="mt-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5">
-            <p className="text-sm text-slate-400 dark:text-slate-500">Generating a clear explanation...</p>
+            <p className="text-sm text-slate-400 dark:text-slate-500">Generating full breakdown...</p>
           </div>
         )}
 
-        {explanation && !loading && (
-          <div className="mt-6 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5">
-            <span className="mb-2 inline-block rounded-full bg-indigo-50 dark:bg-indigo-950 px-2 py-0.5 text-xs font-medium text-indigo-600 dark:text-indigo-400">
-              {topic}
-            </span>
-            <p className="text-sm leading-relaxed text-slate-700 dark:text-slate-300">{explanation}</p>
+        {result && !loading && (
+          <div className="mt-6 space-y-3">
+            <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5">
+              <span className="mb-2 inline-block rounded-full bg-indigo-50 dark:bg-indigo-950 px-2 py-0.5 text-xs font-medium text-indigo-600 dark:text-indigo-400">
+                {result.topic}
+              </span>
+              <p className="text-sm leading-relaxed text-slate-700 dark:text-slate-300">{result.explanation}</p>
+            </div>
+
+            <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5">
+              <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500">
+                Optimized Approach
+              </p>
+              <p className="text-sm text-slate-700 dark:text-slate-300">{result.optimizedApproach}</p>
+            </div>
+
+            <div className="grid grid-cols-3 gap-2">
+              <div className="rounded-lg bg-purple-50 dark:bg-purple-950 px-3 py-2">
+                <p className="text-xs font-medium text-purple-500">Time Complexity</p>
+                <p className="text-sm font-semibold text-purple-700 dark:text-purple-300">{result.timeComplexity}</p>
+              </div>
+              <div className="rounded-lg bg-blue-50 dark:bg-blue-950 px-3 py-2">
+                <p className="text-xs font-medium text-blue-500">Space Complexity</p>
+                <p className="text-sm font-semibold text-blue-700 dark:text-blue-300">{result.spaceComplexity}</p>
+              </div>
+              <div className="rounded-lg bg-emerald-50 dark:bg-emerald-950 px-3 py-2">
+                <p className="text-xs font-medium text-emerald-500">Pattern</p>
+                <p className="text-sm font-semibold text-emerald-700 dark:text-emerald-300">{result.pattern}</p>
+              </div>
+            </div>
+
+            <div className="rounded-xl border border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-950 p-4">
+              <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-amber-600 dark:text-amber-400">
+                💡 Interview Tip
+              </p>
+              <p className="text-sm text-amber-800 dark:text-amber-300">{result.interviewTip}</p>
+            </div>
           </div>
         )}
 
-        {/* Recent searches */}
         {history.length > 0 && (
           <div className="mt-8">
             <h3 className="text-xs font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500">

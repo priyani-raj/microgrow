@@ -5,40 +5,41 @@ const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 const MODEL = 'llama-3.1-8b-instant'; // fast + free tier friendly
 
 // ---------------------------------------------
-// 1. Concept Explainer
-// Given a topic, return a clear explanation in under 60 seconds of reading
-// ---------------------------------------------
 const explainConcept = async (topic, simpler = false) => {
   const prompt = simpler
-    ? `The student found your previous explanation of "${topic}" confusing. Try again with a COMPLETELY DIFFERENT, simpler analogy - assume they have very little background knowledge.
+    ? `The student found your previous explanation of "${topic}" confusing. Try again differently.
 
-Rules:
-- Keep it short enough to read in under 60 seconds (roughly 100-130 words)
-- Use ONE very simple, everyday analogy (different from a typical one - think kitchen, sports, traffic, etc.)
-- Avoid technical terms entirely where possible
-- Build up from the most basic idea first
-
-Format as plain text, no markdown headers.`
+Respond in this EXACT JSON format with no extra text:
+{
+  "explanation": "<explain in 80-100 words using a completely different, very simple everyday analogy — kitchen, sports, traffic, etc. No jargon.>",
+  "optimizedApproach": "<the best known algorithm/technique to solve problems involving this concept, in 1-2 sentences>",
+  "timeComplexity": "<typical time complexity, e.g. O(n log n)>",
+  "spaceComplexity": "<typical space complexity, e.g. O(n)>",
+  "pattern": "<the coding pattern this falls under, e.g. Sliding Window, Two Pointers, Divide and Conquer>",
+  "interviewTip": "<one sentence on what interviewers specifically look for when this topic comes up>"
+}`
     : `Explain the CS concept "${topic}" to a student preparing for technical interviews.
 
-Rules:
-- Keep it short enough to read in under 60 seconds (roughly 120-150 words)
-- Use exactly ONE simple real-world analogy
-- No jargon without explaining it
-- End with one sentence on why this matters in interviews
-
-Format as plain text, no markdown headers.`;
+Respond in this EXACT JSON format with no extra text:
+{
+  "explanation": "<clear explanation in 100-130 words using one real-world analogy. No jargon without explaining it.>",
+  "optimizedApproach": "<the best known algorithm/technique to solve problems involving this concept, in 1-2 sentences>",
+  "timeComplexity": "<typical time complexity, e.g. O(n log n)>",
+  "spaceComplexity": "<typical space complexity, e.g. O(n)>",
+  "pattern": "<the coding pattern this falls under, e.g. Sliding Window, Two Pointers, Divide and Conquer, BFS/DFS, DP, etc.>",
+  "interviewTip": "<one sentence on what interviewers specifically look for when this topic comes up>"
+}`;
 
   const completion = await groq.chat.completions.create({
     model: MODEL,
     messages: [{ role: 'user', content: prompt }],
     temperature: 0.5,
-    max_tokens: 300,
+    max_tokens: 500,                           // ← changed from 300
+    response_format: { type: 'json_object' },  // ← added this line
   });
 
-  return completion.choices[0].message.content.trim();
+  return JSON.parse(completion.choices[0].message.content);  // ← changed from .trim()
 };
-
 // ---------------------------------------------
 // 2. DSA Approach Evaluator
 // User writes their approach in plain English, AI scores and gives feedback
