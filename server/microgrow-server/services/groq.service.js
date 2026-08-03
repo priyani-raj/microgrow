@@ -16,7 +16,8 @@ Respond in this EXACT JSON format with no extra text:
   "timeComplexity": "<typical time complexity, e.g. O(n log n)>",
   "spaceComplexity": "<typical space complexity, e.g. O(n)>",
   "pattern": "<the coding pattern this falls under, e.g. Sliding Window, Two Pointers, Divide and Conquer>",
-  "interviewTip": "<one sentence on what interviewers specifically look for when this topic comes up>"
+  "interviewTip": "<one sentence on what interviewers specifically look for when this topic comes up>",
+  "mostAskedQuestions": ["<a commonly asked technical interview question about this topic>", "<another one>", "<another one>", "<another one>", "<another one>"]
 }`
     : `Explain the CS concept "${topic}" to a student preparing for technical interviews.
 
@@ -27,18 +28,19 @@ Respond in this EXACT JSON format with no extra text:
   "timeComplexity": "<typical time complexity, e.g. O(n log n)>",
   "spaceComplexity": "<typical space complexity, e.g. O(n)>",
   "pattern": "<the coding pattern this falls under, e.g. Sliding Window, Two Pointers, Divide and Conquer, BFS/DFS, DP, etc.>",
-  "interviewTip": "<one sentence on what interviewers specifically look for when this topic comes up>"
+  "interviewTip": "<one sentence on what interviewers specifically look for when this topic comes up>",
+  "mostAskedQuestions": ["<a commonly asked technical interview question about this topic>", "<another one>", "<another one>", "<another one>", "<another one>"]
 }`;
 
   const completion = await groq.chat.completions.create({
     model: MODEL,
     messages: [{ role: 'user', content: prompt }],
     temperature: 0.5,
-    max_tokens: 500,                           // ← changed from 300
-    response_format: { type: 'json_object' },  // ← added this line
+    max_tokens: 700,                           // ← bumped to fit mostAskedQuestions
+    response_format: { type: 'json_object' },
   });
 
-  return JSON.parse(completion.choices[0].message.content);  // ← changed from .trim()
+  return JSON.parse(completion.choices[0].message.content);
 };
 // ---------------------------------------------
 // 2. DSA Approach Evaluator

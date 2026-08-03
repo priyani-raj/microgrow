@@ -20,7 +20,7 @@ const SessionComplete = ({ streak, minutes }) => {
 
       <div className="mt-6 flex w-full gap-2">
         <button
-          onClick={() => window.location.reload()}
+         onClick={() => window.location.reload()}
           className="flex-1 rounded-lg border border-slate-200 dark:border-slate-800 px-4 py-2 text-sm font-medium text-slate-600 dark:text-slate-400 transition hover:bg-slate-50 dark:hover:bg-slate-800"
         >
           Another session

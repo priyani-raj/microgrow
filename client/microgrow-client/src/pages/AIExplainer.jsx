@@ -123,6 +123,25 @@ const AIExplainer = () => {
               </p>
               <p className="text-sm text-amber-800 dark:text-amber-300">{result.interviewTip}</p>
             </div>
+
+            {Array.isArray(result.mostAskedQuestions) && result.mostAskedQuestions.length > 0 && (
+              <div className="rounded-xl border border-rose-200 dark:border-rose-800 bg-rose-50 dark:bg-rose-950 p-4">
+                <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-rose-600 dark:text-rose-400">
+                  ❓ Most Asked Interview Questions
+                </p>
+                <ul className="space-y-1.5">
+                  {result.mostAskedQuestions.map((q, idx) => (
+                    <li
+                      key={idx}
+                      className="flex gap-2 text-sm text-rose-800 dark:text-rose-300"
+                    >
+                      <span className="mt-0.5 shrink-0 text-rose-400 dark:text-rose-500">•</span>
+                      <span>{q}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         )}
 

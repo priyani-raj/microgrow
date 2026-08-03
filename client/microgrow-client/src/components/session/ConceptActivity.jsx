@@ -89,6 +89,22 @@ const ConceptActivity = ({ topic, onComplete }) => {
         <p className="text-xs text-amber-800 dark:text-amber-300">{result?.interviewTip}</p>
       </div>
 
+      {Array.isArray(result?.mostAskedQuestions) && result.mostAskedQuestions.length > 0 && (
+        <div className="rounded-xl border border-rose-200 dark:border-rose-800 bg-rose-50 dark:bg-rose-950 p-3">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-rose-600 dark:text-rose-400">
+            ❓ Most Asked Interview Questions
+          </p>
+          <ul className="space-y-1.5">
+            {result.mostAskedQuestions.map((q, idx) => (
+              <li key={idx} className="flex gap-2 text-xs text-rose-800 dark:text-rose-300">
+                <span className="mt-0.5 shrink-0 text-rose-400 dark:text-rose-500">•</span>
+                <span>{q}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       <p className="text-center text-sm text-slate-500 dark:text-slate-400">Was this clear?</p>
       <div className="grid grid-cols-2 gap-2">
         <button onClick={handleClear}
