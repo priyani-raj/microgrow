@@ -1,14 +1,14 @@
 # MicroGrow
 
-**Turn stolen lecture time into real CS skill — one 5-minute session at a time.**
+**Turn stolen pockets of free time into real CS skill — one 5-minute session at a time.**
 
-MicroGrow is a phone-first, AI-powered learning companion built for CS students who spend hours in lectures they're not fully present for. Instead of scrolling, MicroGrow turns those scattered 5–20 minute windows into compounding progress — DSA practice, spaced-repetition flashcards, and quick concept explanations — all picked intelligently based on how much time you actually have.
+MicroGrow is a phone-first, AI-powered learning companion built for CS students who have small windows of dead time scattered through their day — waiting for a friend, standing in a queue, sitting between classes, riding the bus. Instead of scrolling, MicroGrow turns those scattered 5–20 minute windows into compounding progress — DSA practice, spaced-repetition flashcards, and quick concept explanations — all picked intelligently based on how much time you actually have.
 
 ---
 
 ## The Problem
 
-Every CS student has sat through a lecture they weren't absorbing, phone in hand, doom-scrolling instead of studying. Existing tools (LeetCode, Anki, Notion) all assume you'll sit down with full focus and intent. None of them are built for **low-focus, interrupted, phone-only, 5-minute bursts** — which is where most students actually spend their "free" time.
+Every CS student has moments of dead time — waiting for someone, standing in line, killing time between classes, sitting on a commute — and the default is to pull out the phone and doom-scroll. Existing tools (LeetCode, Anki, Notion) all assume you'll sit down with full focus and intent. None of them are built for **low-focus, interrupted, phone-only, 5-minute bursts** — which is where most students actually spend their "free" time.
 
 MicroGrow is built specifically for that constraint.
 
@@ -38,6 +38,8 @@ MicroGrow is built specifically for that constraint.
 
 ### 🤖 AI Concept Explainer
 - Search any CS topic, get a ~60-second plain-language explanation with one analogy (powered by Groq)
+- Includes optimized approach, time/space complexity, coding pattern, and an interview tip for every topic
+- **Most Asked Interview Questions** — a list of commonly asked interview questions for the topic, generated alongside the explanation, shown both in the standalone AI Explainer page and inside the 10-minute Concept Activity session
 - **"Still confused?" retry flow** — if the first explanation doesn't land, the AI generates a *completely different* analogy, simpler and jargon-free
 - After a second unsuccessful attempt, the topic is flagged for deeper review later (rather than looping forever)
 - Recent search history for quick re-access
@@ -136,7 +138,7 @@ microgrow/
 | GET | `/api/session/start?minutes=` | Get the right activity for available time |
 | POST | `/api/session/complete` | Log a completed session |
 | GET | `/api/session/history` | Past sessions |
-| POST | `/api/ai/explain` | 60-second concept explanation (with retry support) |
+| POST | `/api/ai/explain` | 60-second concept explanation with optimized approach, complexity, pattern, interview tip, and most asked interview questions (with retry support) |
 | POST | `/api/ai/evaluate` | Evaluate a DSA approach |
 | POST | `/api/ai/generate-flashcards` | Generate flashcards for a topic |
 | GET | `/api/flashcards/due` | Cards due for review |
@@ -171,7 +173,7 @@ The app runs on `http://localhost:5173` (frontend) and `http://localhost:5000` (
 
 ## Why I Built This
 
-I noticed that in every lecture, almost no one was actually paying attention — everyone, including me, was doom-scrolling. Rather than fight that, I built something that fits *into* that exact behavior: phone in hand, a few minutes at a time, zero pressure to focus deeply — but it compounds into real interview readiness over weeks.
+I noticed how much of my day was made up of small dead-time windows — waiting for someone, standing in a line, killing five minutes between things — and in almost every one of them, I ended up doom-scrolling instead. Rather than fight that, I built something that fits *into* that exact behavior: phone in hand, a few minutes at a time, zero pressure to focus deeply — but it compounds into real interview readiness over weeks.
 
 ---
 
