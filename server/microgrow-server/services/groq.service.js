@@ -2,7 +2,7 @@ const Groq = require('groq-sdk');
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
-const MODEL = 'llama-3.1-8b-instant'; // fast + free tier friendly
+const MODEL = 'openai/gpt-oss-20b'; // fast + free tier friendly
 
 // ---------------------------------------------
 const explainConcept = async (topic, simpler = false) => {
