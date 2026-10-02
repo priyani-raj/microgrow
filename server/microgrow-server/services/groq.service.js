@@ -4,40 +4,87 @@ const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 const MODEL = 'openai/gpt-oss-20b'; // fast + free tier friendly
 
-// ---------------------------------------------
 const explainConcept = async (topic, simpler = false) => {
+
   const prompt = simpler
-    ? `The student found your previous explanation of "${topic}" confusing. Try again differently.
-
-Respond in this EXACT JSON format with no extra text:
-{
-  "explanation": "<explain in 80-100 words using a completely different, very simple everyday analogy — kitchen, sports, traffic, etc. No jargon.>",
-  "optimizedApproach": "<the best known algorithm/technique to solve problems involving this concept, in 1-2 sentences>",
-  "timeComplexity": "<typical time complexity, e.g. O(n log n)>",
-  "spaceComplexity": "<typical space complexity, e.g. O(n)>",
-  "pattern": "<the coding pattern this falls under, e.g. Sliding Window, Two Pointers, Divide and Conquer>",
-  "interviewTip": "<one sentence on what interviewers specifically look for when this topic comes up>",
-  "mostAskedQuestions": ["<a commonly asked technical interview question about this topic>", "<another one>", "<another one>", "<another one>", "<another one>"]
-}`
+    ? `The student found your previous explanation of "${topic}" confusing.
+Try again differently using a very simple everyday analogy such as kitchen, sports, traffic, etc.
+Avoid unnecessary jargon.`
     : `Explain the CS concept "${topic}" to a student preparing for technical interviews.
-
-Respond in this EXACT JSON format with no extra text:
-{
-  "explanation": "<clear explanation in 100-130 words using one real-world analogy. No jargon without explaining it.>",
-  "optimizedApproach": "<the best known algorithm/technique to solve problems involving this concept, in 1-2 sentences>",
-  "timeComplexity": "<typical time complexity, e.g. O(n log n)>",
-  "spaceComplexity": "<typical space complexity, e.g. O(n)>",
-  "pattern": "<the coding pattern this falls under, e.g. Sliding Window, Two Pointers, Divide and Conquer, BFS/DFS, DP, etc.>",
-  "interviewTip": "<one sentence on what interviewers specifically look for when this topic comes up>",
-  "mostAskedQuestions": ["<a commonly asked technical interview question about this topic>", "<another one>", "<another one>", "<another one>", "<another one>"]
-}`;
+Use one real-world analogy and explain technical terms clearly.`;
 
   const completion = await groq.chat.completions.create({
     model: MODEL,
-    messages: [{ role: 'user', content: prompt }],
+
+    messages: [
+      {
+        role: 'system',
+        content: 'You are a helpful computer science interview tutor.'
+      },
+      {
+        role: 'user',
+        content: prompt
+      }
+    ],
+
     temperature: 0.5,
-    max_tokens: 700,                           // ← bumped to fit mostAskedQuestions
-    response_format: { type: 'json_object' },
+    max_tokens: 700,
+
+    response_format: {
+      type: 'json_schema',
+      json_schema: {
+        name: 'concept_explanation',
+        strict: true,
+        schema: {
+          type: 'object',
+
+          properties: {
+            explanation: {
+              type: 'string'
+            },
+
+            optimizedApproach: {
+              type: 'string'
+            },
+
+            timeComplexity: {
+              type: 'string'
+            },
+
+            spaceComplexity: {
+              type: 'string'
+            },
+
+            pattern: {
+              type: 'string'
+            },
+
+            interviewTip: {
+              type: 'string'
+            },
+
+            mostAskedQuestions: {
+              type: 'array',
+              items: {
+                type: 'string'
+              }
+            }
+          },
+
+          required: [
+            'explanation',
+            'optimizedApproach',
+            'timeComplexity',
+            'spaceComplexity',
+            'pattern',
+            'interviewTip',
+            'mostAskedQuestions'
+          ],
+
+          additionalProperties: false
+        }
+      }
+    }
   });
 
   return JSON.parse(completion.choices[0].message.content);
